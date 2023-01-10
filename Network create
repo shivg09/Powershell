@@ -1,0 +1,60 @@
+$Numberofvideo=20
+if ($Numberofvideo -ge 15)
+ {
+    "Greatoer then 10"
+ }
+    else {
+        "less then 10"
+    }
+
+$i=1
+while ($i -le 5) 
+{
+$i 
+++$i 
+    
+}
+vi
+
+===========================
+$ResourceGroupName = "myrg08"
+$Location = "West Europe"
+$VirtualNetworkName = "Vnetwork1"
+$VirtualNetworkAddressSpace = "10.0.0.0/16"
+$SubnetName = "SubnetA"
+$SubnetNameAddressSpace = "10.0.0.0/24"
+ 
+New-AzResourceGroup -Name $ResourceGroupName -Location $Location
+#Subnet Creation
+
+$SubnetA=New-AzVirtualNetworkSubnetConfig -Name $SubnetName -AddressPrefix $SubnetNameAddressSpace 
+
+#Virtual network
+
+$VirtulNetwork = New-AzVirtualNetwork -Name $VirtualNetworkName -ResourceGroupName $ResourceGroupName -Location $Location -AddressPrefix $VirtualNetworkAddressSpace -Subnet $SubnetA
+
+#Virtual Network Details
+
+$VirtulNetwork
+
+================
+Network interface create
+
+
+$ResourceGroupName = "myrg08"
+$VirtualNetworkName = "Vnetwork1"
+$SubnetName = "SubnetA"
+$Location = "West Europe"
+$VirtualNetwork = Get-AzVirtualNetwork -Name $VirtualNetworkName -ResourceGroupName $ResourceGroupName
+$Subnet = Get-AzVirtualNetworkSubnetConfig -Name $SubnetName -VirtualNetwork $VirtualNetwork
+
+#network interface create
+$NetworkInterfaceName = "app-interface"
+$NetworkInterface = New-AzNetworkInterface -Name $NetworkInterfaceName -ResourceGroupName $ResourceGroupName -Location $Location -Subnet $Subnet
+
+$NetworkInterface
+
+
+=======================================
+
+
