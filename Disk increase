@@ -1,0 +1,38 @@
+
+Add data disk in vm
+
+$ResourceGroupName = "myrg08"
+$vmname = "myvmv009"
+$Datadiskname = "app-datadisk"
+$Location = "West Europe"
+
+$vm = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $
+$vm |Add-AzVMDatadisk -Name $Datadiskname -DiskSizeGB 16 -CreateOption Empty -Lun 0
+$Vm |Update-AzVM
+
+
+================
+VM Size change
+
+
+$ResourceGroupName = "myrg08"
+$vmname = "myvmv009"
+$DesiredVMSize = "Standard_DS1_v2"
+
+
+$vm = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $vmname
+if ($vm.HardwareProfile.VmSize -ne $DesiredVMSize)
+{
+    $vm.HardwareProfile.VmSize=$DesiredVMSize
+    $Vm | Update-AzVM
+    'The vm has modified'
+}
+else
+{
+    'The vm already of the desired size'
+}
+
+
+================================================
+
+
