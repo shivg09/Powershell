@@ -34,5 +34,23 @@ else
 
 
 ================================================
+## VM Status check(running or stopped)
+
+$vmstatus=Get-AzVM -ResourceGroupName test.rg  -Status
+#$vmstatus=Get-AzVM -Status
+foreach($vmcheck in $vmstatus)
+{
+$vmstatus=Get-AzVM -ResourceGroupName $vmcheck.ResourceGroupName -Name $vmcheck.Name -Status
+
+if($vmstatus.statuses[1].DisplayStatus -eq "VM running")
+{
+ Write-output "vm are running $($vmcheck.Name)"
+ Stop-AzVM -ResourceGroupName $vmcheck.ResourceGroupName -Name $vmcheck.Name -Force
+}
+else
+{
+'vm are stopped'
+}
+}
 
 
