@@ -54,3 +54,26 @@ else
 }
 
 
+=========================
+##Data disk Replace from one vm to anothe vm
+
+Attach and remove the datadisk from the vm
+
+$ResourceGroupName="powershell-rgp"
+$SourceVMName="appvm1"
+$DestinationVMName="appvm2"
+$DataDiskName="app-disk1"
+
+$SourceVm=Get-AzVM -ResourceGroupName $ResourceGroupName -Name $SourceVMName
+$DataDisk =Get-AzDisk -ResourceGroupName $ResourceGroupName -DiskName $DataDiskName
+Remove-AzVMDataDisk -VM $SourceVm -DataDiskName $DataDisk.Name
+$SourceVm |Update-AzVM
+
+#Attache to other vm
+
+$DestinationVm= Get-AzVM -ResourceGroupName $ResourceGroupName -Name $DestinationVMName
+Add-AzDataDisk -VM $DestinationVm -Name $DataDisk.Name -Lun 0 -CreateOption Attach -ManageDiskId $datadisk.Id
+
+$DestinationVm |Update-AzVM
+
+===============
