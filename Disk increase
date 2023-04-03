@@ -31,6 +31,21 @@ else
 {
     'The vm already of the desired size'
 }
+===============
+Disk InCREASE 
+$ResourceGroupName="rg1"
+$Location="Central India"
+
+$DiskName="vm2_OsDisk_1_f641f46978fb4c3fa991d796d1fbd857"
+#$vms=Get-AzVM -ResourceGroupName $ResourceGroupName -Name vm2
+Stop-AzVM -ResourceGroupName $ResourceGroupName -Name vm2
+
+$disk=Get-AzDisk -ResourceGroupName $ResourceGroupName -DiskName $DiskName
+
+$disk.DiskSizeGB=35
+
+update-AzDisk -ResourceGroupName $ResourceGroupName -Disk $Disk -DiskName $DiskName
+~
 
 
 ================================================
